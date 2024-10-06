@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors Game</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: "Arial", sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        text-align: center;
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      .choices {
+        margin: 20px 0;
+      }
+
+      .choice {
+        padding: 10px;
+        margin: 0 10px;
+        font-size: 24px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        transition: background-color 0.3s;
+      }
+
+      .choice:hover {
+        background-color: #0056b3;
+      }
+
+      .result {
+        margin: 20px 0;
+        font-size: 20px;
+      }
+
+      .score {
+        margin-top: 20px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Rock, Paper, Scissors</h1>
+      <div class="choices">
+        <button id="rock" class="choice">&#128074; Rock</button>
+        <button id="paper" class="choice">&#9995; Paper</button>
+        <button id="scissors" class="choice">&#9996; Scissors</button>
+      </div>
+      <div class="result">
+        <h2 id="resultText">Choose an option to start!</h2>
+      </div>
+      <div class="score">
+        <h3>Score</h3>
+        <p id="userScore">Your Score: 0</p>
+        <p id="computerScore">Computer Score: 0</p>
+      </div>
+    </div>
+
+    <script>
+      let userScore = 0;
+      let computerScore = 0;
+
+      const choices = ["rock", "paper", "scissors"];
+      const resultText = document.getElementById("resultText");
+      const userScoreDisplay = document.getElementById("userScore");
+      const computerScoreDisplay = document.getElementById("computerScore");
+
+      function getComputerChoice() {
+        const randomIndex = Math.floor(Math.random() * choices.length);
+        return choices[randomIndex];
+      }
+
+      function determineWinner(userChoice, computerChoice) {
+        if (userChoice === computerChoice) {
+          return "It's a draw!";
+        }
+        if (
+          (userChoice === "rock" && computerChoice === "scissors") ||
+          (userChoice === "paper" && computerChoice === "rock") ||
+          (userChoice === "scissors" && computerChoice === "paper")
+        ) {
+          userScore++;
+          return "You win!";
+        } else {
+          computerScore++;
+          return "Computer wins!";
+        }
+      }
+
+      function playGame(userChoice) {
+        const computerChoice = getComputerChoice();
+        resultText.innerText = `You chose ${userChoice} &#128134;, Computer chose ${computerChoice} &#9995;. ${determineWinner(
+          userChoice,
+          computerChoice
+        )}`;
+        userScoreDisplay.innerText = `Your Score: ${userScore}`;
+        computerScoreDisplay.innerText = `Computer Score: ${computerScore}`;
+      }
+
+      document
+        .getElementById("rock")
+        .addEventListener("click", () => playGame("rock"));
+      document
+        .getElementById("paper")
+        .addEventListener("click", () => playGame("paper"));
+      document
+        .getElementById("scissors")
+        .addEventListener("click", () => playGame("scissors"));
+    </script>
+  </body>
+</html>
